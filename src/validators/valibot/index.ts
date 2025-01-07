@@ -1,7 +1,18 @@
 import * as v from 'valibot'
 
 import type { UI } from '../../ui.js'
-import type { ValibotSchema } from '../../types.js'
+import type { RecordViteKeys } from '../../types.js'
+
+/**
+ * Contract for schema defintion for valibot validator
+ */
+export type ValibotSchema = RecordViteKeys<v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>>
+
+/**
+ * Infer the value of the schema based on the valibot validator
+ */
+export type ValibotEnvValue<Fn> =
+  Fn extends v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>> ? v.InferOutput<Fn> : never
 
 type ValibotValidationError = {
   key: string

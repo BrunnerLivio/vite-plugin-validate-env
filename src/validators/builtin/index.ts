@@ -1,5 +1,17 @@
+import type { ValidateFn } from '@poppinss/validator-lite'
+
 import type { UI } from '../../ui.js'
-import type { PoppinsSchema } from '../../types.js'
+import type { RecordViteKeys } from '../../types.js'
+
+/**
+ * Contract for schema definition for poppins validator
+ */
+export type PoppinsSchema = RecordViteKeys<ValidateFn<any>>
+
+/**
+ * Infer the value of the schema based on the poppins validator
+ */
+export type PoppinsEnvValue<Fn> = Fn extends ValidateFn<any> ? ReturnType<Fn> : never
 
 export function errorReporter(ui: UI, errors: any[]) {
   let finalMessage = ui.colors.red('Failed to validate environment variables : \n')

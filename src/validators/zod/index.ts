@@ -1,6 +1,17 @@
-import type { ZodSchema } from 'zod'
+import type { z } from 'zod'
 
 import type { UI } from '../../ui.js'
+import type { RecordViteKeys } from '../../types.js'
+
+/**
+ * Contract for schema definition for zod validator
+ */
+export type ZodSchema = RecordViteKeys<z.ZodType<any, any>>
+
+/**
+ * Infer the value of the schema based on the zod validator
+ */
+export type ZodEnvValue<Fn> = Fn extends z.ZodType<any, any> ? z.infer<Fn> : never
 
 export function errorReporter(ui: UI, errors: any[]) {
   let finalMessage = ui.colors.red('Failed to validate environment variables : \n')
